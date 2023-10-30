@@ -41,11 +41,13 @@ def region_selector(im_dir:str):
         green_upper = np.array([19, 92, 73], np.uint8)
 
         mask2 = cv.inRange(result2, green_lower, green_upper)
-        
+        kernel = np.ones((15, 15), np.uint8) 
+        image = cv.erode(mask2, kernel, cv.BORDER_REFLECT)
+        image = cv.dilate(image, kernel, cv.BORDER_REFLECT)
         fig.add_subplot(2,2,i+1)
         plt.axis("off")
         plt.title(f"Imagem {i}")
-        plt.imshow(mask2)
+        plt.imshow(image)
     
     plt.show()
     
